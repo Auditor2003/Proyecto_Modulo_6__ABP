@@ -1,17 +1,17 @@
-# Importo el panel de administración que trae Django
-from django.contrib import admin
+# Importo la función path que me permite definir rutas dentro de mi aplicación
+from django.urls import path
 
-# Importo las funciones necesarias para manejar rutas
-from django.urls import path, include
+# Importo las vistas que definí en views.py
+# Desde aquí podré conectar las rutas con las funciones que muestran las páginas
+from . import views
 
 
-# Aquí defino las rutas principales de todo mi proyecto
+# Aquí defino la lista de rutas (URL patterns) que tendrá mi aplicación
 urlpatterns = [
 
-    # Esta ruta permite acceder al panel de administración de Django
-    path('admin/', admin.site.urls),
+    # Esta será la página principal de mi aplicación
+    # Cuando el usuario entre a la raíz del sitio ( / )
+    # Django ejecutará la función "home" que definí en views.py
+    path('', views.home, name='home'),
 
-    # Aquí conecto las URLs de mi aplicación "tareas"
-    # Esto le dice a Django que use el archivo tareas/urls.py
-    path('', include('tareas.urls')),
 ]
