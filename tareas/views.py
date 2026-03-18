@@ -1,4 +1,4 @@
-# Importo la función render que me permite mostrar plantillas HTML
+# Importo la función que me permite mostrar plantillas HTML
 from django.shortcuts import render
 
 
