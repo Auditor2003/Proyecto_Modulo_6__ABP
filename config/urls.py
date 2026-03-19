@@ -4,7 +4,6 @@ from django.contrib import admin
 # Importo las funciones necesarias para manejar rutas
 from django.urls import path, include
 
-
 # Aquí defino las rutas principales de todo mi proyecto
 urlpatterns = [
 
