@@ -1,6 +1,9 @@
 # Importo la función render para mostrar plantillas HTML
 from django.shortcuts import render
 
+# Aqui estoy usando decoradores de login
+from django.contrib.auth.decorators import login_required
+
 # Importo mis modelos para poder consultar datos de la base de datos
 from .models import Proyecto, Tarea
 
