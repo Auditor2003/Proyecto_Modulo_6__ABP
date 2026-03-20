@@ -1,30 +1,28 @@
-# Importo la función render para mostrar plantillas HTML
+# Importo la función render para poder mostrar páginas HTML
 from django.shortcuts import render
 
-# Aqui estoy usando decoradores de login
+# Importo el decorador login_required
+# Este decorador permite que solo usuarios logueados puedan acceder a ciertas vistas
 from django.contrib.auth.decorators import login_required
 
-# Importo mis modelos para poder consultar datos de la base de datos
-from .models import Proyecto, Tarea
 
-
-# Aquí defino la vista de la página principal
+# 
+# 
+# Esta es la página principal del sitio
+# Cualquier usuario puede verla, incluso si no está logueado
 def home(request):
 
-    # Aquí cuento cuántos proyectos existen en la base de datos
-    total_proyectos = Proyecto.objects.count()
+    # Renderizo la plantilla home.html
+    return render(request, 'tareas/home.html')
 
-    # Aquí cuento cuántas tareas existen
-    total_tareas = Tarea.objects.count()
 
-    # Aquí cuento las tareas pendientes
-    tareas_pendientes = Tarea.objects.filter(completada=False).count()
+# 
+# VISTA DASHBOARD
+# 
+# Uso el decorador login_required para proteger esta vista
+# Esto significa que solo usuarios autenticados pueden acceder
+@login_required
+def dashboard(request):
 
-    # Aquí envío los datos al template para mostrarlos en la página
-    contexto = {
-        'total_proyectos': total_proyectos,
-        'total_tareas': total_tareas,
-        'tareas_pendientes': tareas_pendientes
-    }
-
-    return render(request, 'tareas/home.html', contexto)
+    # Aquí renderizo la página dashboard.html
+    return render(request, 'tareas/dashboard.html')
