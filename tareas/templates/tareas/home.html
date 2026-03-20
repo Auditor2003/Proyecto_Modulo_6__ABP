@@ -15,26 +15,52 @@
 <!-- Comienzo el cuerpo de mi página web -->
 <body class="bg-light">
 
-    <!-- Creo un contenedor de Bootstrap para centrar el contenido -->
+    <!-- Creo un contenedor principal usando Bootstrap -->
     <div class="container mt-5">
 
-        <!-- Este será el título principal de mi aplicación -->
-        <h1 class="text-center mb-4">
-            Gestor de Proyectos
-        </h1>
+        <!-- Título principal de mi aplicación -->
+        <h1 class="text-center mb-4">Gestor de Proyectos</h1>
 
-        <!-- Aquí explico brevemente qué hace mi aplicación -->
+        <!-- Breve descripción de la aplicación -->
         <p class="text-center">
             En esta aplicación podré gestionar proyectos y tareas utilizando Django.
         </p>
 
-        <!-- Agrego un botón solo para darle algo de interacción visual a la página -->
-        <div class="text-center mt-4">
+        <!-- Aquí comienzo a construir los widgets del dashboard -->
+        <div class="row mt-5">
 
-            <!-- Este botón todavía no hace nada (jaja), pero después lo usaré para navegar -->
-            <button class="btn btn-primary">
-                Comenzar
-            </button>
+            <!-- Widget total de proyectos -->
+            <div class="col-md-4">
+                <div class="card text-center shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Proyectos</h5>
+                        <!-- Aquí muestro el número de proyectos desde la base de datos -->
+                        <h2>{{ total_proyectos }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget total de tareas -->
+            <div class="col-md-4">
+                <div class="card text-center shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Tareas</h5>
+                        <!-- Aquí muestro el número total de tareas -->
+                        <h2>{{ total_tareas }}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget tareas pendientes -->
+            <div class="col-md-4">
+                <div class="card text-center shadow">
+                    <div class="card-body">
+                        <h5 class="card-title">Pendientes</h5>
+                        <!-- Aquí muestro las tareas que aún no están completadas -->
+                        <h2>{{ tareas_pendientes }}</h2>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
