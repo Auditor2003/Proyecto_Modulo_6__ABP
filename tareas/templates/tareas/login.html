@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- Aquí defino el título que veré en la pestaña del navegador -->
+    <title>Login</title>
+</head>
+<body>
+
+    <!-- Aquí muestro un enlace simple para volver al inicio -->
+    <a href="{% url 'home' %}">Inicio</a>
+
+    <!-- Aquí muestro el título principal del formulario -->
+    <h1>Inicio de Sesión</h1>
+
+    <!-- Aquí creo el formulario de login -->
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- Aquí muestro el formulario que Django envía automáticamente -->
+        {{ form.as_p }}
+
+        <!-- Aquí agrego el botón para iniciar sesión -->
+        <button type="submit">Ingresar</button>
+    </form>
+
+</body>
+</html>
