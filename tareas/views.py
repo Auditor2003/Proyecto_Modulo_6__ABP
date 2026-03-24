@@ -33,19 +33,22 @@ def dashboard(request):
 
 
 # VISTA LOGIN
-#
+
 # Aquí creo una vista basada en clases para manejar el inicio de sesión
 class CustomLoginView(LoginView):
 
     # Aquí indico qué plantilla HTML voy a usar para mostrar el login
     template_name = 'tareas/login.html'
 
-    # Aquí indico que después de iniciar sesión quiero ir al dashboard
-    success_url = reverse_lazy('dashboard')
+    # Aquí defino a qué página quiero enviar al usuario después del login
+    def get_success_url(self):
+
+        # Aquí retorno la URL del dashboard cuando el login es correcto
+        return reverse_lazy('dashboard')
 
 
 # VISTA LOGOUT
-# 
+
 # Aquí creo una vista basada en clases para cerrar la sesión del usuario
 class CustomLogoutView(LogoutView):
 
