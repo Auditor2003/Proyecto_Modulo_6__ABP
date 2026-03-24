@@ -9,6 +9,9 @@ from django.contrib.auth.decorators import login_required
 # para manejar el inicio y cierre de sesión
 from django.contrib.auth.views import LoginView, LogoutView
 
+# Importo reverse_lazy para poder redirigir a una ruta después del login
+from django.urls import reverse_lazy
+
 
 # VISTA HOME
 
@@ -20,7 +23,7 @@ def home(request):
 
 
 # VISTA DASHBOARD
-#
+
 # Aquí protejo esta vista para que solo usuarios logueados puedan acceder
 @login_required
 def dashboard(request):
@@ -30,15 +33,19 @@ def dashboard(request):
 
 
 # VISTA LOGIN
-
+#
 # Aquí creo una vista basada en clases para manejar el inicio de sesión
 class CustomLoginView(LoginView):
 
     # Aquí indico qué plantilla HTML voy a usar para mostrar el login
     template_name = 'tareas/login.html'
 
-# VISTA LOGOUT
+    # Aquí indico que después de iniciar sesión quiero ir al dashboard
+    success_url = reverse_lazy('dashboard')
 
+
+# VISTA LOGOUT
+# 
 # Aquí creo una vista basada en clases para cerrar la sesión del usuario
 class CustomLogoutView(LogoutView):
 
