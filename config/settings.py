@@ -121,3 +121,9 @@ STATIC_URL = 'static/'
 # Aquí defino la URL donde Django enviará a los usuarios cuando intenten
 # acceder a una vista protegida sin haber iniciado sesión
 LOGIN_URL = 'login'
+
+# Aquí defino a qué página quiero enviar al usuario después de iniciar sesión
+LOGIN_REDIRECT_URL = '/dashboard/'
+
+# Aquí defino a qué página quiero enviar al usuario después de cerrar sesión
+LOGOUT_REDIRECT_URL = '/'
