@@ -11,11 +11,13 @@
     <!-- Aquí muestro un enlace para volver a la página principal -->
     <a href="{% url 'home' %}">Inicio</a>
 
-    <!-- Aquí dejo una separación simple -->
-    |
-    
-    <!-- Aquí muestro un enlace para cerrar la sesión del usuario -->
-    <a href="{% url 'logout' %}">Cerrar sesión</a>
+    <!-- Aquí creo un formulario pequeño para cerrar sesión correctamente con método POST -->
+    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+        {% csrf_token %}
+
+        <!-- Aquí agrego el botón para cerrar la sesión del usuario -->
+        <button type="submit">Cerrar sesión</button>
+    </form>
 
     <!-- Aquí muestro el título principal del dashboard -->
     <h1>Panel del Usuario</h1>
