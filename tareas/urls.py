@@ -19,4 +19,8 @@ urlpatterns = [
     # Uso la vista basada en clases que creé para iniciar sesión
     path('login/', views.CustomLoginView.as_view(), name='login'),
 
+    # Aquí defino la ruta del logout
+    # Uso la vista basada en clases que creé para cerrar sesión
+    path('logout/', views.CustomLogoutView.as_view(), name='logout'),
+
 ]

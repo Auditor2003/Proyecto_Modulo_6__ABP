@@ -5,8 +5,9 @@ from django.shortcuts import render
 # Este decorador me permite proteger vistas para que solo entren usuarios autenticados
 from django.contrib.auth.decorators import login_required
 
-# Importo la vista LoginView que Django trae lista para manejar el inicio de sesión
-from django.contrib.auth.views import LoginView
+# Importo la vista LoginView y la vista LogoutView que Django trae listas
+# para manejar el inicio y cierre de sesión
+from django.contrib.auth.views import LoginView, LogoutView
 
 
 # VISTA HOME
@@ -19,7 +20,7 @@ def home(request):
 
 
 # VISTA DASHBOARD
-
+#
 # Aquí protejo esta vista para que solo usuarios logueados puedan acceder
 @login_required
 def dashboard(request):
@@ -29,9 +30,17 @@ def dashboard(request):
 
 
 # VISTA LOGIN
-# 
+
 # Aquí creo una vista basada en clases para manejar el inicio de sesión
 class CustomLoginView(LoginView):
 
     # Aquí indico qué plantilla HTML voy a usar para mostrar el login
     template_name = 'tareas/login.html'
+
+# VISTA LOGOUT
+
+# Aquí creo una vista basada en clases para cerrar la sesión del usuario
+class CustomLogoutView(LogoutView):
+
+    # Aquí indico a qué página quiero enviar al usuario después de cerrar sesión
+    next_page = 'home'

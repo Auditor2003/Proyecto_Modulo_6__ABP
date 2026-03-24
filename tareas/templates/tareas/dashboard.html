@@ -1,22 +1,30 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
 
     <!-- Aquí defino el título que aparecerá en la pestaña del navegador -->
     <title>Dashboard</title>
-
 </head>
-
 <body>
 
-    <!-- Aquí muestro el título principal de la página -->
+    <!-- Aquí muestro un enlace para volver a la página principal -->
+    <a href="{% url 'home' %}">Inicio</a>
+
+    <!-- Aquí dejo una separación simple -->
+    |
+    
+    <!-- Aquí muestro un enlace para cerrar la sesión del usuario -->
+    <a href="{% url 'logout' %}">Cerrar sesión</a>
+
+    <!-- Aquí muestro el título principal del dashboard -->
     <h1>Panel del Usuario</h1>
 
-    <!-- Aquí muestro un mensaje informativo -->
-    <!-- Esta página solo puede ser vista por usuarios que hayan iniciado sesión -->
-    <p>Bienvenido al dashboard. Esta página solo está disponible para usuarios autenticados.</p>
+    <!-- Aquí le doy la bienvenida al usuario que inició sesión -->
+    <p>Bienvenido {{ user.username }}.</p>
+
+    <!-- Aquí muestro un mensaje indicando que esta es una vista protegida -->
+    <p>Esta página solo está disponible para usuarios autenticados.</p>
 
 </body>
-
 </html>
