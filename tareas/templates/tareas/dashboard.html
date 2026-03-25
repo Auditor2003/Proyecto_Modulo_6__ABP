@@ -20,10 +20,13 @@
         <!-- Aquí saludo al usuario logueado -->
         <h2>Bienvenido {{ user.username }}</h2>
 
-        <!-- Aquí dejo botón para cerrar sesión -->
-        <a href="{% url 'logout' %}" class="btn btn-danger">
-            Cerrar sesión
-        </a>
+        <!-- Aquí uso un formulario POST para cerrar sesión correctamente -->
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                Cerrar sesión
+            </button>
+        </form>
 
     </div>
 
@@ -53,10 +56,10 @@
 
                             <li class="list-group-item d-flex justify-content-between">
 
-                                <!-- Nombre de la tarea -->
+                                <!-- Aquí muestro el nombre de la tarea -->
                                 <span>{{ tarea.nombre }}</span>
 
-                                <!-- Estado de la tarea -->
+                                <!-- Aquí indico el estado de la tarea -->
                                 {% if tarea.completado %}
                                     <span class="text-success">Completada</span>
                                 {% else %}
