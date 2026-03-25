@@ -2,55 +2,52 @@
 from django.shortcuts import render
 
 # Importo el decorador login_required
-# Este decorador me permite proteger vistas para que solo entren usuarios autenticados
 from django.contrib.auth.decorators import login_required
 
-# Importo la vista LoginView y la vista LogoutView que Django trae listas
-# para manejar el inicio y cierre de sesión
+# Importo vistas de autenticación
 from django.contrib.auth.views import LoginView, LogoutView
 
-# Importo reverse_lazy para poder redirigir a una ruta después del login
+# Importo reverse_lazy para redirecciones
 from django.urls import reverse_lazy
 
+# Importo mis modelos
+from .models import Proyecto, Tarea
 
-# VISTA HOME
 
 # Aquí defino la página principal de mi aplicación
 def home(request):
 
-    # Aquí renderizo la plantilla principal home.html
-    return render(request, 'tareas/home.html')
+    # Aquí cuento la cantidad total de proyectos
+    total_proyectos = Proyecto.objects.count()
+
+    # Aquí cuento la cantidad total de tareas
+    total_tareas = Tarea.objects.count()
+
+    # Aquí cuento solo las tareas pendientes (no completadas)
+    pendientes = Tarea.objects.filter(completado=False).count()
+
+    # Aquí envío estos datos al template
+    return render(request, 'tareas/home.html', {
+        'total_proyectos': total_proyectos,
+        'total_tareas': total_tareas,
+        'pendientes': pendientes
+    })
 
 
-# VISTA DASHBOARD
-
-# Aquí protejo esta vista para que solo usuarios logueados puedan acceder
+# Aquí protejo esta vista
 @login_required
 def dashboard(request):
-
-    # Aquí renderizo la plantilla del dashboard
     return render(request, 'tareas/dashboard.html')
 
 
-# VISTA LOGIN
-
-# Aquí creo una vista basada en clases para manejar el inicio de sesión
+# Vista login personalizada
 class CustomLoginView(LoginView):
-
-    # Aquí indico qué plantilla HTML voy a usar para mostrar el login
     template_name = 'tareas/login.html'
 
-    # Aquí defino a qué página quiero enviar al usuario después del login
     def get_success_url(self):
-
-        # Aquí retorno la URL del dashboard cuando el login es correcto
         return reverse_lazy('dashboard')
 
 
-# VISTA LOGOUT
-
-# Aquí creo una vista basada en clases para cerrar la sesión del usuario
+# Vista logout personalizada
 class CustomLogoutView(LogoutView):
-
-    # Aquí indico a qué página quiero enviar al usuario después de cerrar sesión
     next_page = 'home'

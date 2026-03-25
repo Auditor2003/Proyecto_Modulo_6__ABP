@@ -33,7 +33,10 @@
             <div class="col-md-4">
                 <div class="card shadow-sm border-0 rounded-4 text-center h-100">
                     <div class="card-body py-5">
-                        <h2 class="h1 fw-bold mb-2">--</h2>
+
+                        <!-- Aquí muestro la cantidad de proyectos -->
+                        <h2 class="h1 fw-bold mb-2">{{ total_proyectos }}</h2>
+
                         <p class="fs-3 mb-0">Proyectos</p>
                     </div>
                 </div>
@@ -43,42 +46,49 @@
             <div class="col-md-4">
                 <div class="card shadow-sm border-0 rounded-4 text-center h-100">
                     <div class="card-body py-5">
-                        <h2 class="h1 fw-bold mb-2">--</h2>
+
+                        <!-- Aquí muestro la cantidad de tareas -->
+                        <h2 class="h1 fw-bold mb-2">{{ total_tareas }}</h2>
+
                         <p class="fs-3 mb-0">Tareas</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Aquí muestro el widget de pendientes -->
+            <!-- Aquí muestro el widget de tareas pendientes -->
             <div class="col-md-4">
                 <div class="card shadow-sm border-0 rounded-4 text-center h-100">
                     <div class="card-body py-5">
-                        <h2 class="h1 fw-bold mb-2">--</h2>
+
+                        <!-- Aquí muestro la cantidad de tareas pendientes -->
+                        <h2 class="h1 fw-bold mb-2">{{ pendientes }}</h2>
+
                         <p class="fs-3 mb-0">Pendientes</p>
                     </div>
                 </div>
             </div>
+
         </div>
 
-        <!-- Aquí agrego una sección con botones de acceso -->
+        <!-- Aquí agrego botones según si el usuario está autenticado -->
         <div class="text-center">
 
-            <!-- Aquí reviso si el usuario ya inició sesión -->
             {% if user.is_authenticated %}
 
-                <!-- Aquí muestro un botón para ir al dashboard si el usuario ya está autenticado -->
+                <!-- Aquí muestro botón para ir al dashboard -->
                 <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg rounded-3 me-2">
                     Ir al dashboard
                 </a>
 
             {% else %}
 
-                <!-- Aquí muestro un botón para iniciar sesión si el usuario aún no está autenticado -->
+                <!-- Aquí muestro botón para iniciar sesión -->
                 <a href="{% url 'login' %}" class="btn btn-primary btn-lg rounded-3">
                     Iniciar sesión
                 </a>
 
             {% endif %}
+
         </div>
 
     </div>
