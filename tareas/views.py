@@ -14,7 +14,7 @@ from django.urls import reverse_lazy
 from .models import Proyecto, Tarea
 
 
-# Aquí defino la vista del home
+# Aquí defino el HOME (dashboard visual con conteos)
 def home(request):
 
     # Aquí cuento proyectos
@@ -34,48 +34,38 @@ def home(request):
     })
 
 
-# Aquí protejo el dashboard (si no está logueado lo manda a login)
+# Aquí defino el DASHBOARD real (detalle)
 @login_required
 def dashboard(request):
 
     # Aquí verifico si es superusuario
     if request.user.is_superuser:
 
-        # Aquí obtengo proyectos
+        # Aquí obtengo proyectos con sus tareas
         proyectos = Proyecto.objects.all()
 
-        # Aquí renderizo con detalle
         return render(request, 'tareas/dashboard.html', {
             'proyectos': proyectos
         })
 
     else:
-        # Aquí renderizo sin detalle
+        # Aquí usuario normal entra pero sin detalle
         return render(request, 'tareas/dashboard.html')
 
 
 # Aquí defino login personalizado
 class CustomLoginView(LoginView):
 
-    # Aquí indico template
+    # Aquí uso mi template
     template_name = 'tareas/login.html'
 
-    # Aquí dejo que Django maneje el next automáticamente
+    # Aquí defino que SIEMPRE vuelva al home (conteos)
     def get_success_url(self):
-
-        # Aquí reviso si existe "next"
-        next_url = self.request.GET.get('next')
-
-        # Si existe, lo uso
-        if next_url:
-            return next_url
-
-        # Si no, lo mando al dashboard
-        return reverse_lazy('dashboard')
+        return reverse_lazy('home')
 
 
 # Aquí defino logout
 class CustomLogoutView(LogoutView):
 
-    # Aquí lo mando al home al cerrar sesión
+    # Aquí redirijo al home
     next_page = 'home'
