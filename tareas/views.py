@@ -7,10 +7,10 @@ from django.contrib.auth.decorators import login_required
 # Importo vistas de autenticación de Django
 from django.contrib.auth.views import LoginView, LogoutView
 
-# Importo reverse_lazy para redirecciones
+# Importo reverse_lazy para manejar redirecciones
 from django.urls import reverse_lazy
 
-# Importo mis modelos
+# Importo los modelos del proyecto
 from .models import Proyecto, Tarea
 
 
@@ -34,14 +34,14 @@ def home(request):
     })
 
 
-# Aquí protejo la vista del dashboard
+# Aquí protejo la vista del dashboard para que solo usuarios logueados accedan
 @login_required
 def dashboard(request):
 
     # Aquí verifico si el usuario es superusuario
     if request.user.is_superuser:
 
-        # Aquí obtengo todos los proyectos
+        # Aquí obtengo todos los proyectos con sus tareas
         proyectos = Proyecto.objects.all()
 
         # Aquí envío los proyectos al template
@@ -50,23 +50,24 @@ def dashboard(request):
         })
 
     else:
-        # Aquí si es usuario normal no envío detalle
+        # Aquí si es usuario normal solo muestro el dashboard sin detalle
         return render(request, 'tareas/dashboard.html')
 
 
 # Aquí defino la vista de login personalizada
 class CustomLoginView(LoginView):
 
-    # Aquí indico qué template usar
+    # Aquí indico el template que voy a usar
     template_name = 'tareas/login.html'
 
-    # Aquí defino a dónde redirigir después del login
+    # Aquí defino a dónde redirijo después de iniciar sesión
+    # En este caso vuelvo al home (pantalla de bienvenida)
     def get_success_url(self):
-        return reverse_lazy('dashboard')
+        return reverse_lazy('home')
 
 
 # Aquí defino la vista de logout personalizada
 class CustomLogoutView(LogoutView):
 
-    # Aquí defino a dónde redirigir después del logout
+    # Aquí defino a dónde redirigir después de cerrar sesión
     next_page = 'home'
