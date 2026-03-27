@@ -20,13 +20,32 @@ class RegistroUsuarioForm(UserCreationForm):
         ('admin', 'Administrador'),
     )
 
-    tipo_usuario = forms.ChoiceField(choices=TIPO_USUARIO)
+    tipo_usuario = forms.ChoiceField(
+        choices=TIPO_USUARIO,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
     # Aquí permito elegir proyecto
-    proyecto = forms.ModelChoiceField(queryset=Proyecto.objects.all())
+    proyecto = forms.ModelChoiceField(
+        queryset=Proyecto.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
     class Meta:
         model = User
 
-        # Campos del formulario
+        # Campos
         fields = ['username', 'password1', 'password2']
+
+        # AQUÍ ESTÁ LA CLAVE DEL ARREGLO VISUAL
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+    # AQUÍ ARREGLO LOS PASSWORD (clave)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Aquí agrego clases Bootstrap a todos los campos
+        self.fields['password1'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password2'].widget.attrs.update({'class': 'form-control'})
