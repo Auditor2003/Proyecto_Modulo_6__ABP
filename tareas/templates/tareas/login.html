@@ -4,69 +4,67 @@
 
 {% block content %}
 
-<!-- Aquí centro el formulario en la pantalla -->
-<div class="row justify-content-center">
-    <div class="col-md-5">
+<!-- Aquí centro el contenedor -->
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
 
-        <!-- Aquí creo una tarjeta visual -->
-        <div class="card p-4 shadow-sm">
+    <!-- Aquí mantengo tu card original -->
+    <div class="card p-4 shadow-lg" style="width: 400px; border-radius: 15px;">
 
-            <!-- Aquí dejo un enlace para volver al inicio -->
-            <a href="{% url 'home' %}" class="mb-3 d-block">
-                ← Volver al inicio
-            </a>
+        <!-- Volver -->
+        <a href="{% url 'home' %}" class="mb-3 d-block">
+            ← Volver al inicio
+        </a>
 
-            <!-- Aquí muestro el título -->
-            <h2 class="text-center mb-4">Inicio de Sesión</h2>
+        <!-- Título -->
+        <h2 class="text-center mb-4">Inicio de Sesión</h2>
 
-            <!-- Aquí muestro error si el login falla -->
-            {% if form.errors %}
-                <div class="alert alert-danger">
-                    Mi usuario o contraseña no son correctos. Inténtalo nuevamente.
-                </div>
-            {% endif %}
-
-            <!-- Aquí inicio el formulario de login -->
-            <form method="post">
-
-                <!-- Aquí agrego protección CSRF -->
-                {% csrf_token %}
-
-                <!-- Campo usuario -->
-                <div class="mb-3">
-                    <label class="form-label">Nombre de usuario</label>
-                    {{ form.username }}
-                </div>
-
-                <!-- Campo contraseña -->
-                <div class="mb-3">
-                    <label class="form-label">Contraseña</label>
-                    {{ form.password }}
-                </div>
-
-                <!-- Botón para iniciar sesión -->
-                <button type="submit" class="btn btn-primary w-100">
-                    Ingresar
-                </button>
-
-            </form>
-
-            <!-- Aquí agrego la opción para crear usuario -->
-            <div class="text-center mt-3">
-
-                <!-- Mensaje para guiar al usuario -->
-                <p class="mb-2">¿No tienes cuenta?</p>
-
-                <!-- Botón que lleva al registro -->
-                <a href="{% url 'registro' %}" class="btn btn-outline-secondary w-100">
-                    Crear usuario
-                </a>
-
+        <!-- Error -->
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                Mi usuario o contraseña no son correctos. Inténtalo nuevamente.
             </div>
+        {% endif %}
+
+        <!-- Formulario -->
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Usuario -->
+            <div class="mb-3">
+                <label class="form-label">Nombre de usuario</label>
+                {{ form.username }}
+            </div>
+
+            <!-- Contraseña -->
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                {{ form.password }}
+            </div>
+
+            <!-- Botón login -->
+            <button type="submit" class="btn btn-primary w-100">
+                Ingresar
+            </button>
+        </form>
+
+        <!-- 🔥 SOLO AGREGAMOS ESTO -->
+        <div class="text-center mt-4">
+
+            <!-- Separador visual -->
+            <hr>
+
+            <!-- Mensaje -->
+            <p class="mb-2">¿No tienes cuenta?</p>
+
+            <!-- Botón registro -->
+            <a href="{% url 'registro' %}" class="btn btn-outline-secondary w-100">
+                Crear usuario
+            </a>
 
         </div>
 
     </div>
+
 </div>
 
 {% endblock %}

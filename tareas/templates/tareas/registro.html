@@ -1,77 +1,70 @@
 {% extends 'tareas/base.html' %}
 
-{% block title %}Registro{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
 
-<!-- Aquí muestro el título -->
-<div class="text-center mb-4">
-    <h2>Registro de Usuario</h2>
-</div>
+<!-- Aquí centro el contenedor -->
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
 
-<!-- Aquí creo el formulario -->
-<div class="row justify-content-center">
-    <div class="col-md-6">
+    <!-- Aquí mantengo tu card original -->
+    <div class="card p-4 shadow-lg" style="width: 400px; border-radius: 15px;">
 
-        <div class="card p-4 shadow-sm">
+        <!-- Volver -->
+        <a href="{% url 'home' %}" class="mb-3 d-block">
+            ← Volver al inicio
+        </a>
 
-            <!-- Aquí muestro errores si existen -->
-            {% if form.errors %}
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        {% for field in form %}
-                            {% for error in field.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
+        <!-- Título -->
+        <h2 class="text-center mb-4">Inicio de Sesión</h2>
 
-            <!-- Aquí inicio formulario -->
-            <form method="post">
-                {% csrf_token %}
+        <!-- Error -->
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                Mi usuario o contraseña no son correctos. Inténtalo nuevamente.
+            </div>
+        {% endif %}
 
-                <!-- Usuario -->
-                <div class="mb-3">
-                    <label class="form-label">Nombre de usuario</label>
-                    {{ form.username }}
-                </div>
+        <!-- Formulario -->
+        <form method="post">
+            {% csrf_token %}
 
-                <!-- Password -->
-                <div class="mb-3">
-                    <label class="form-label">Contraseña</label>
-                    {{ form.password1 }}
-                </div>
+            <!-- Usuario -->
+            <div class="mb-3">
+                <label class="form-label">Nombre de usuario</label>
+                {{ form.username }}
+            </div>
 
-                <!-- Confirmación -->
-                <div class="mb-3">
-                    <label class="form-label">Confirmar contraseña</label>
-                    {{ form.password2 }}
-                </div>
+            <!-- Contraseña -->
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                {{ form.password }}
+            </div>
 
-                <!-- Tipo de usuario -->
-                <div class="mb-3">
-                    <label class="form-label">Tipo de usuario</label>
-                    {{ form.tipo_usuario }}
-                </div>
+            <!-- Botón login -->
+            <button type="submit" class="btn btn-primary w-100">
+                Ingresar
+            </button>
+        </form>
 
-                <!-- Proyecto -->
-                <div class="mb-3">
-                    <label class="form-label">Proyecto</label>
-                    {{ form.proyecto }}
-                </div>
+        <!-- 🔥 SOLO AGREGAMOS ESTO -->
+        <div class="text-center mt-4">
 
-                <!-- Botón -->
-                <button type="submit" class="btn btn-primary w-100">
-                    Registrarse
-                </button>
+            <!-- Separador visual -->
+            <hr>
 
-            </form>
+            <!-- Mensaje -->
+            <p class="mb-2">¿No tienes cuenta?</p>
+
+            <!-- Botón registro -->
+            <a href="{% url 'registro' %}" class="btn btn-outline-secondary w-100">
+                Crear usuario
+            </a>
 
         </div>
 
     </div>
+
 </div>
 
 {% endblock %}
