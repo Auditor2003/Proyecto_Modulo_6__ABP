@@ -41,7 +41,7 @@ Se trabajó con dos tipos de usuarios:
   * Acceso limitado
   * No visualiza detalles
 
-Los usuarios son gestionados desde el panel de administración de Django.
+Los usuarios son gestionados desde el panel de administración de Django, sin embargo se pueden crear desde Login Web y asignar rol y proyecto.
 
 ---
 
