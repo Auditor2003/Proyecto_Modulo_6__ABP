@@ -4,17 +4,29 @@ from django import forms
 # Importo modelo User
 from django.contrib.auth.models import User
 
-# Importo formulario base
-from django.contrib.auth.forms import UserCreationForm
+# Importo formularios base de Django
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # Importo modelo Proyecto
 from .models import Proyecto
 
 
-# Aquí creo formulario de registro
+# FORM LOGIN (ARREGLA LOGIN)
+class CustomAuthenticationForm(AuthenticationForm):
+
+    # Aquí aplico clases a los campos
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control'})
+    )
+
+
+# FORM REGISTRO (YA ARREGLADO + COMPLETO)
 class RegistroUsuarioForm(UserCreationForm):
 
-    # Aquí defino tipo de usuario
     TIPO_USUARIO = (
         ('normal', 'Usuario normal'),
         ('admin', 'Administrador'),
@@ -25,7 +37,6 @@ class RegistroUsuarioForm(UserCreationForm):
         widget=forms.Select(attrs={'class': 'form-control'})
     )
 
-    # Aquí permito elegir proyecto
     proyecto = forms.ModelChoiceField(
         queryset=Proyecto.objects.all(),
         widget=forms.Select(attrs={'class': 'form-control'})
@@ -33,19 +44,15 @@ class RegistroUsuarioForm(UserCreationForm):
 
     class Meta:
         model = User
-
-        # Campos
         fields = ['username', 'password1', 'password2']
 
-        # AQUÍ ESTÁ LA CLAVE DEL ARREGLO VISUAL
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-    # AQUÍ ARREGLO LOS PASSWORD (clave)
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Aquí agrego clases Bootstrap a todos los campos
+        # Aquí arreglo password fields
         self.fields['password1'].widget.attrs.update({'class': 'form-control'})
         self.fields['password2'].widget.attrs.update({'class': 'form-control'})
