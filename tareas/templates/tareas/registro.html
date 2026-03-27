@@ -1,67 +1,59 @@
 {% extends 'tareas/base.html' %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Registro{% endblock %}
 
 {% block content %}
 
-<!-- Aquí centro el contenedor -->
 <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
 
-    <!-- Aquí mantengo tu card original -->
     <div class="card p-4 shadow-lg" style="width: 400px; border-radius: 15px;">
 
-        <!-- Volver -->
-        <a href="{% url 'home' %}" class="mb-3 d-block">
-            ← Volver al inicio
+        <a href="{% url 'login' %}" class="mb-3 d-block">
+            ← Volver al login
         </a>
 
-        <!-- Título -->
-        <h2 class="text-center mb-4">Inicio de Sesión</h2>
+        <h2 class="text-center mb-4">Registro de Usuario</h2>
 
-        <!-- Error -->
+        <!-- 🔥 ERROR GLOBAL -->
         {% if form.errors %}
             <div class="alert alert-danger">
-                Mi usuario o contraseña no son correctos. Inténtalo nuevamente.
+                {{ form.errors }}
             </div>
         {% endif %}
 
-        <!-- Formulario -->
         <form method="post">
             {% csrf_token %}
 
-            <!-- Usuario -->
             <div class="mb-3">
-                <label class="form-label">Nombre de usuario</label>
+                <label>Nombre de usuario</label>
                 {{ form.username }}
             </div>
 
-            <!-- Contraseña -->
             <div class="mb-3">
-                <label class="form-label">Contraseña</label>
-                {{ form.password }}
+                <label>Contraseña</label>
+                {{ form.password1 }}
             </div>
 
-            <!-- Botón login -->
+            <div class="mb-3">
+                <label>Confirmar contraseña</label>
+                {{ form.password2 }}
+            </div>
+
+            <div class="mb-3">
+                <label>Tipo de usuario</label>
+                {{ form.tipo_usuario }}
+            </div>
+
+            <div class="mb-3">
+                <label>Proyecto</label>
+                {{ form.proyecto }}
+            </div>
+
             <button type="submit" class="btn btn-primary w-100">
-                Ingresar
+                Registrarse
             </button>
+
         </form>
-
-        <!-- 🔥 SOLO AGREGAMOS ESTO -->
-        <div class="text-center mt-4">
-
-            <!-- Separador visual -->
-            <hr>
-
-            <!-- Mensaje -->
-            <p class="mb-2">¿No tienes cuenta?</p>
-
-            <!-- Botón registro -->
-            <a href="{% url 'registro' %}" class="btn btn-outline-secondary w-100">
-                Crear usuario
-            </a>
-
-        </div>
 
     </div>
 
