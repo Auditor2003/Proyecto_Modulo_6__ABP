@@ -1,5 +1,5 @@
-# Importo la función render para devolver templates
-from django.shortcuts import render
+# Importo render y redirect
+from django.shortcuts import render, redirect
 
 # Importo decorador para proteger vistas
 from django.contrib.auth.decorators import login_required
@@ -7,14 +7,17 @@ from django.contrib.auth.decorators import login_required
 # Importo vistas de autenticación
 from django.contrib.auth.views import LoginView, LogoutView
 
-# Importo reverse_lazy para redirecciones
+# Importo reverse_lazy
 from django.urls import reverse_lazy
 
 # Importo modelos
 from .models import Proyecto, Tarea
 
+# Importo formulario de registro
+from .forms import RegistroUsuarioForm
 
-# Aquí defino el HOME (dashboard visual con conteos)
+
+# Aquí defino el home (pantalla principal con conteo)
 def home(request):
 
     # Aquí cuento proyectos
@@ -26,7 +29,7 @@ def home(request):
     # Aquí cuento pendientes
     pendientes = Tarea.objects.filter(completado=False).count()
 
-    # Aquí renderizo el home
+    # Aquí envío datos al template
     return render(request, 'tareas/home.html', {
         'total_proyectos': total_proyectos,
         'total_tareas': total_tareas,
@@ -34,32 +37,77 @@ def home(request):
     })
 
 
-# Aquí defino el DASHBOARD real (detalle)
+# Aquí defino el dashboard (detalle)
 @login_required
 def dashboard(request):
 
     # Aquí verifico si es superusuario
     if request.user.is_superuser:
 
-        # Aquí obtengo proyectos con sus tareas
+        # Aquí obtengo todos los proyectos
         proyectos = Proyecto.objects.all()
 
-        return render(request, 'tareas/dashboard.html', {
-            'proyectos': proyectos
-        })
+    else:
+        # Aquí solo obtengo los proyectos del usuario
+        proyectos = Proyecto.objects.filter(usuario=request.user)
+
+    # Aquí renderizo
+    return render(request, 'tareas/dashboard.html', {
+        'proyectos': proyectos
+    })
+
+
+# Aquí creo la vista de registro
+def registro(request):
+
+    # Aquí verifico si es POST
+    if request.method == 'POST':
+
+        form = RegistroUsuarioForm(request.POST)
+
+        # Aquí valido el formulario
+        if form.is_valid():
+
+            # Aquí creo usuario sin guardar aún
+            user = form.save(commit=False)
+
+            # Aquí obtengo datos
+            tipo = form.cleaned_data['tipo_usuario']
+            proyecto = form.cleaned_data['proyecto']
+
+            # Aquí asigno tipo de usuario
+            if tipo == 'admin':
+                user.is_superuser = True
+                user.is_staff = True
+            else:
+                user.is_superuser = False
+                user.is_staff = False
+
+            # Aquí guardo el usuario
+            user.save()
+
+            # Aquí asigno el proyecto al usuario
+            proyecto.usuario = user
+            proyecto.save()
+
+            # Aquí redirijo al login
+            return redirect('login')
 
     else:
-        # Aquí usuario normal entra pero sin detalle
-        return render(request, 'tareas/dashboard.html')
+        form = RegistroUsuarioForm()
+
+    # Aquí renderizo el formulario
+    return render(request, 'tareas/registro.html', {
+        'form': form
+    })
 
 
 # Aquí defino login personalizado
 class CustomLoginView(LoginView):
 
-    # Aquí uso mi template
     template_name = 'tareas/login.html'
 
-    # Aquí defino que SIEMPRE vuelva al home (conteos)
+    # Aquí redirijo al home
     def get_success_url(self):
         return reverse_lazy('home')
 
