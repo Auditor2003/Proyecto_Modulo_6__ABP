@@ -1,0 +1,77 @@
+{% extends 'tareas/base.html' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+
+<!-- Aquí muestro el título -->
+<div class="text-center mb-4">
+    <h2>Registro de Usuario</h2>
+</div>
+
+<!-- Aquí creo el formulario -->
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card p-4 shadow-sm">
+
+            <!-- Aquí muestro errores si existen -->
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- Aquí inicio formulario -->
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Usuario -->
+                <div class="mb-3">
+                    <label class="form-label">Nombre de usuario</label>
+                    {{ form.username }}
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    {{ form.password1 }}
+                </div>
+
+                <!-- Confirmación -->
+                <div class="mb-3">
+                    <label class="form-label">Confirmar contraseña</label>
+                    {{ form.password2 }}
+                </div>
+
+                <!-- Tipo de usuario -->
+                <div class="mb-3">
+                    <label class="form-label">Tipo de usuario</label>
+                    {{ form.tipo_usuario }}
+                </div>
+
+                <!-- Proyecto -->
+                <div class="mb-3">
+                    <label class="form-label">Proyecto</label>
+                    {{ form.proyecto }}
+                </div>
+
+                <!-- Botón -->
+                <button type="submit" class="btn btn-primary w-100">
+                    Registrarse
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
